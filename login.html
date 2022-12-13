@@ -1,18 +1,90 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>sgdrrp project</title>
-        <meta charset="UTF-8" />
-        <link rel="stylesheet" href="/Users/kimchaeyeon/Desktop/sgdrrp/templetes/style.css">
-    </head>
-    <body>
-        <form action="">
-            <h2>Login</h2>
-            <input type="text" placeholder="E-mail" />
-            <input type="text" placeholder="password" />
-            <input type="text" placeholder="nickname" />
-            <input type="submit" placeholder="Login" />
-        </form>
-        <script src="templetes/login.js"></script>
-    </body>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <form>
+        <h1>Sign Up</h1>
+        <div> email : <input type="email" id="signUpEmail" /> </div>
+        <div> password : <input type="password" id="signUpPassword" /> </div>
+        <button type="submit" id="signUpButton">회원가입</button>>
+        <button>로그인</button>
+    </form>
+    
+    <form>
+        <h1>Login</h1>
+        <div> email : <input type="email" id="signInEmail" /> </div>
+        <div> password : <input type="password" id="signInPassword" /> </div>
+        <button type="submit" id="signInButton">회원가입</button>>
+        <button>로그인</button>
+    </form>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBgADNm3N5KdlbIOENMpuKyNuf2uoRBJW0",
+          authDomain: "easylogin-a1eac.firebaseapp.com",
+          projectId: "easylogin-a1eac",
+          storageBucket: "easylogin-a1eac.appspot.com",
+          messagingSenderId: "136307201031",
+          appId: "1:136307201031:web:600076dec2ed89fe9c46a2",
+          measurementId: "G-XRD0TYN3R2"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+
+        const auth = getAuth();
+        document.getElementById('signUpButton').addEventListener('click', (event) => {
+            event.preventDefault()
+            const signUpemail = document.getElementById('signUpEmail').value
+            const signUpPassword = document.getElementById('signUpPassword').value
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    console.log(userCredential)
+                    // Signed in 
+                    const user = userCredential.user;
+                    // ...
+                })
+                .catch((error) => {
+                    console.log('error')
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                });
+        })
+
+        document.getElementById('signInButton').addEventListener('click', (event) => {
+            event.preventDefault()
+            const signInEmail = document.getElementById('signInEmail').value
+            const signInPassword = document.getElementById('signInPassword').value
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    console.log(userCredential) 
+                    const user = userCredential.user;
+                    // ...
+                })
+                .catch((error) => {
+                    console.log('로그인 실패')
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
+        })
+        
+        </script>
+</body>
 </html>
